@@ -1,0 +1,238 @@
+\documentclass{jarticle}
+\hyphenpenalty=10000\relax
+\exhyphenpenalty=10000\relax %%単語の途中で改行しない
+\sloppy 
+\usepackage{geometry}
+\geometry{left=20mm,right=20mm,top=15mm,bottom=15mm} %%余白の設定
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}[section]
+\newtheorem{defi}[thm]{定義}
+\newtheorem{ex}[thm]{例}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{rem}[thm]{注意}
+
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+%%-------------------------------------------------
+\title{忙しい人のための情報幾何入門}
+\date{\today}
+
+\begin{document}
+	\maketitle
+\section{微分幾何学}
+	$S$を多様体とし, 関数,曲線はすべて$C^{\infty}$級とする. 
+    $S$上の関数全体の集合を$C^\infty(S)$とする.\\
+    $X:C^\infty(S)\to C^\infty(S)$が{\bf 微分作用素}であるとは, 
+    \begin{center}
+        \begin{description}
+            \item[線形性] $X(a\varphi+b\psi)=a X(\varphi)+b X(\psi)$ 
+            \item[Leipniz則] $X(\varphi\psi)=\varphi X(\psi)+X(\varphi)\psi$
+        \end{description}
+    \end{center}
+    をみたすことをいう. 
+    $C^\infty(S)$上の微分作用素を$S$上の{\bf ベクトル場}という. 
+    $S$上のベクトル場全体を$\mathcal{X}(S)$とする. 
+    各$p\in S$で, {\bf 椄ベクトル}$X_p:C^\infty(S)\to\mathbb{R}$を
+    \[
+    	X_p(\varphi)=(X\varphi)(p)
+    \]
+    で定義する. 
+    $p$における椄ベクトル全体の集合を$T_p S$と書き, 
+    $p$における$S$の{\bf 接空間}という. 
+    $T_p S$は線形空間である.\\
+    $g:\mathcal{X}(S)\times\mathcal{X}(S)\to C^\infty(S)$が{\bf Riemann計量}とは, 
+    各$p\in S$で, 
+    \[
+    	g_p(X_p,Y_p)=g(X,Y)(p)
+    \]
+    によって定まる$g_p:T_p S\times T_p S\to\mathbb{R}$が$T_p S$上の内積となっていることをいう.\\
+    Riemann計量を定めると, $S$上の曲線に対して, {\bf 直交}が定義される. 
+    $S$上の曲線$\alpha:(-\varepsilon,\varepsilon)\to S$に対し, 
+    $t\in(-\varepsilon, \varepsilon)$における椄ベクトル$\dot{\alpha}_t\in T_{\alpha_t}S$を
+    \[
+    	\dot{\alpha}_t(\varphi)=\frac{{\rm d}(\varphi\circ\alpha)}{{\rm d}t}(t)
+    \]
+    で定める. $\alpha_0=\beta_0=p$なる2曲線$\alpha$と$\beta$が$p$で$g$に関して直交するとは, 
+    \[
+    	g_p(\dot{\alpha}_0,\dot{\beta}_0)=0
+    \]
+   となっていることをいう.\\
+   $\nabla:\mathcal{X}(S)\times\mathcal{X}(S)\to\mathcal{X}(S)$が{\bf アフィン接続}であるとは, 
+   \begin{eqnarray*}
+   		& &\nabla_X(Y+Z) = \nabla_X Y + \nabla_X Z \\
+        & &\nabla_{X+Y}Z = \nabla_X Z + \nabla_Y Z \\
+        & &\nabla_X(\varphi Y) = (X\varphi)Y+\varphi\nabla_X Y \\
+        & &\nabla_{\varphi X}Y = \varphi\nabla_X Y
+   \end{eqnarray*}
+   をみたすことをいう. 
+   アフィン接続を定めると, $S$上のベクトル場に対して, {\bf 平行}が定義される. 
+   曲線$\alpha$が与えられたとき, $\alpha$上の各$\alpha_t$に$\dot{\alpha}_t$を対応させることで, 
+   曲線に沿ったベクトル場$\dot{\alpha}$が定義できる. 
+   ベクトル場$X\in\mathcal{X}(S)$がアフィン接続$\nabla$に関して, 曲線$\alpha$に沿って平行とは, 
+   \[
+   		\nabla_{\dot{\alpha}}X=0
+   \]
+   となっていることをいう. 
+   また, 
+   \[
+   		\nabla_{\dot{\alpha}}\dot{\alpha}=0
+   \]
+   をみたす曲線$\alpha$を$\nabla$に関する{\bf 測地線}という.\\
+   $\nabla$の曲率$R:\mathcal{X}(S) \times \mathcal{X}(S) \times \mathcal{X}(S) \to \mathcal{X}(S)$と
+   捩率$T:\mathcal{X}(S) \times \mathcal{X}(S) \to \mathcal{X}(S)$を
+   \begin{eqnarray*}
+   		& & R(X,Y,Z)=\nabla_X\nabla_Y Z - \nabla_Y\nabla_X Z - \nabla_{[X,Y]}Z \\
+        & & T(X,Y)=\nabla_X Y- \nabla_Y X - [X,Y] 
+   \end{eqnarray*}
+   で定義し, 曲率と捩率がともに恒等的に$0$のとき, $S$は$\nabla$に関して{\bf 平坦}であるという. 
+   $S$の部分多様体$M$に対して, $M$が$\nabla$に関して{\bf 自己平行}であるとは, 
+   任意のベクトル場$X,Y\in \mathcal{X}(M)$に対して, 
+   $\nabla_X Y\in \mathcal{X}(M)$となることをいう.\\
+   $\nabla^0$がRiemann多様体$(S,g)$のLevi-Civita接続であるとは, 
+   \begin{eqnarray*}
+   		& & \nabla^0_X Y - \nabla^0_Y X - [X,Y]=0\\
+        & & Xg(Y,Z)=g(\nabla^0_X Y, Z) + g(Y,\nabla^0_X Z)
+   \end{eqnarray*}
+   をみたすことをいう. Riemann幾何学でアフィン接続といえば, 通常はLevi-Civita接続のことを指す.
+   
+\section{情報幾何学}
+   ここでは, 確率分布は有限集合上の分布のみを扱う. 
+   $\mathcal{X}$を有限集合として, 
+   $\mathcal{X}$上の確率分布全体の集合を, 
+   \[
+   		S:=\left\{ p:\mathcal{X}\to (0,1)\ \middle|\  \sum_{x\in\mathcal{X}}p(x)=1  \right\}
+   \]
+   とする. $S$はユークリッド空間の開部分集合なので, 多様体である.\\
+   $E_p$は$p$に関する期待値を表すとする.
+   \[
+   		g_p(X_p,Y_p):=E_p[(X \log p)(Y \log p)]	
+   \]
+   でRiemann計量を定める. これを{\bf Fisher計量}という. \\
+   $\nabla^0$をLevi-Civita接続として, 
+   \begin{eqnarray*}
+   		& & g_p(\nabla_X^e Y,Z)=g_p(\nabla_X^0 Y,Z)-\frac{1}{2}E_p[(X \log p)(Y \log p)(Z \log p)]\\
+        & & g_p(\nabla_X^m Y,Z)=g_p(\nabla_X^0 Y,Z)+\frac{1}{2}E_p[(X \log p)(Y \log p)(Z \log p)]
+   \end{eqnarray*}
+   によって定まるアフィン接続$\nabla^e$と$\nabla^e$をそれぞれ, 
+   {\bf 指数型接続}と{\bf 混合型接続}という. \\
+   $K<\sharp\mathcal{X}$とする. 
+   関数$C:\mathcal{X}\to\mathbb{R}$と$F:\mathcal{X}\to\mathbb{R}^K$が与えられたとき, 
+   パラメータ$\theta\in\Theta\subset\mathbb{R}^K$を用いて, 
+   \[
+   		p_\theta(x) = \exp(C(x)+\theta^T F(x)-\psi(\theta))
+   \]
+   で表される分布族$\{ p_\theta \mid \theta\in\Theta \}$を, 
+   {\bf 指数型分布族}という. ここで, 
+   \[
+   		\psi(\theta)=\log\left( \sum_{x\in\mathcal{X}} \exp(C(x)+\theta^T F(x)) \right)
+   \]
+   $S$の部分多様体$M$が$\nabla^e$-自己平行であることと, 
+   $M$が指数型分布族であることは同値である.\\
+   $q_0,q_1,\dots,q_K \in S$が与えられたとき, 
+   パラメータ$\eta\in \mathcal{H}\subset\mathbb{R}^K$を用いて, 
+   \[
+   		p_\eta(x)=\left( 1-\sum_{k=1}^K \eta_k \right)q_0(x) + \sum_{k=1}^K \eta_k q_k(x)
+   \]
+   で表される分布族$\{ p_\eta \mid \eta\in\mathcal{H} \}$を, 
+   {\bf 混合型分布族}という. 
+   $S$の部分多様体$M$が$\nabla^e$-自己平行であることと, 
+   $M$が混合型分布族であることは同値である.\\
+   $p,q\in S$に対して, 
+   \[
+   		\text{KL}[p\|q]:=\sum_{x\in\mathcal{X}}p(x)\log\frac{p(x)}{q(x)}
+   \]
+   を$p$から$q$への{\bf Kullback-Leiblerダイバージェンス}という. \\
+   Kullback-Leiblerダイバージェンスは対称ではないが, 三角不当式
+   \[
+   		\text{KL}[p\|q]+\text{KL}[q\|r]\geq\text{KL}[p\|r]
+   \]
+   が成り立ち, 
+   $p$と$q$を結ぶ$\nabla^m$-測地線と
+   $q$と$r$を結ぶ$\nabla^m$-測地線が
+   $q$で直交しているときに限り, Pythagorasの定理
+   \[
+   		\text{KL}[p\|q]+\text{KL}[q\|r]=\text{KL}[p\|r]
+   \]
+   が成り立つ.\\
+   確率モデル$M=\{p_\theta\mid\theta\in\Theta\}$と, 
+   未知の分布に従う独立な確率変数列の実現値$x_1,\dots,x_N\in\mathcal{X}$が与えられたとき, 
+   \[
+   		\hat{\theta}_N:=\argmax_{\theta}\prod_{n=1}^N p_\theta(x_n)
+   \]
+   を最尤推定量という.\\
+   経験分布$\hat{p}_N$を,
+   \[
+   		\hat{p}_N(x)=\frac{1}{N}\sum_{n=1}^N\delta(x-x_n)
+   \]
+   で定義すると, 
+   \[
+   		\hat{\theta}_N=\argmin_{\theta}\text{KL}[\hat{p}_N\|p_\theta]
+   \]
+   が成り立つ.\\
+   $\hat{p}_N$を通る$\nabla^m$-測地線が$p_{\theta^*}$で$M$と直交しているとする. 
+   このとき, 任意の$\theta$に対し, Pythagorasの定理
+   \[
+   		\text{KL}[\hat{p}_N\|p_{\theta^*}]+\text{KL}[p_{\theta^*}\|p_\theta]
+        =\text{KL}[\hat{p}_N\|p_{\theta}]
+   \]
+   が成り立つので, 
+   \[
+   		\text{KL}[\hat{p}_N\|p_{\theta^*}]
+        \leq \text{KL}[\hat{p}_N\|p_{\theta}]
+   \]
+   よって, 
+   \[
+   		\theta^*=\argmin_{\theta} \text{KL}[\hat{p}_N\|p_{\theta}]=\hat{\theta}_N
+   \]
+   であるから, 最尤推定は経験分布から確率モデルへの$\nabla^m$-直交射影に他ならない. 
+   特に, 確率モデルが指数型ならば, 最尤推定は一意的である.
+   
+\section{隠れ変数を含むモデル}
+	$\mathcal{X}=\mathcal{Y}\times\mathcal{Z}$として, 
+    $\mathcal{X},\mathcal{Y},\mathcal{Z}$上の確率分布全体を
+    それぞれ$S^\mathcal{X},S^\mathcal{Y},S^\mathcal{Z}$とする. 
+    指数型分布族$M=\{p_\theta\in S^\mathcal{X}\mid\theta\in\Theta\}$と, 
+    未知の分布に従う独立な確率変数列$\{x_n=(y_n,z_n)\}_{n=1}^N$の一部$\{y_n\}_{n=1}^N$
+    が与えられたとする. $\{z_n\}_{n=1}^N$を{\bf 隠れ変数}という.
+    経験分布を,
+    \[
+   		\hat{q}_N(x)=\frac{1}{N}\sum_{n=1}^N\delta(y-y_n)
+    \]
+    として, 
+    \[
+    	D:=\left\{ p\in S^\mathcal{X} \mid \sum_{z\in\mathcal{Z}}p(y,z)=\hat{q}_N(y) \right\}
+    \]
+    とする. 
+    $D$は$\nabla^m$-自己平行で, $D$の各点は$\hat{q}_N(y)r(z|y)$と表さる.
+    \[
+    	\theta_{t+1}=\argmin_{\theta}\text{KL}[\hat{q}_N(y)r_{\theta_t}(z|y) \| p_\theta(y,z)]
+    \]
+    に従ってパラメータを更新するアルゴリズムを{\bf EMアルゴリズム}という.
+    \[
+    	\hat{q}_N(y)r_{\theta_t}(z|y)=\argmin_{p\in D} \text{KL}[p\|p_{\theta_t}]
+    \]
+    より, EMアルゴリズムは$M$から$D$への$\nabla^e$-射影と
+    $D$から$M$への$\nabla^m$-射影を交互に繰り返していることがわかる.\\
+    \[
+    	D=\{ \hat{q}_N(y)r_\eta(z|y) \mid \eta\in\mathcal{H} \}
+    \]
+    として, 
+    \[
+    	\eta_{t+1}=\argmin_{\eta}\text{KL}[\hat{q}_N(y)r_{\eta}(z|y) \| p_{\theta_t}(y,z)]
+    \]
+    \[
+    	\theta_{t+1}=\argmin_{\theta}\text{KL}[\hat{q}_N(y)r_{\eta_{t+1}}(z|y) \| p_\theta(y,z)]
+    \]
+	でパラメータを更新するアルゴリズムを{\bf 一般化EMアルゴリズム}という. 
+    各$\eta$に対して, $r_\eta(z|y)$が条件付き独立となるようにパラメータを決める事が多い. \\
+    複雑な分布を独立分布で近似することを{\bf 平均場近似}という.
+    平均場近似は$\nabla^e$-自己平行部分多様体への$\nabla^e$-射影なので, 一般に一意に定まらない.
+\end{document}
